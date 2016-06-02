@@ -215,7 +215,8 @@ else
       # known_hosts file
       if ! ssh-keygen -H -F "$BUILDKITE_REPO_SSH_HOST" | grep -q "$BUILDKITE_REPO_SSH_HOST"; then
         buildkite-prompt ssh-keyscan "$BUILDKITE_REPO_SSH_HOST"
-        ssh-keyscan "$BUILDKITE_REPO_SSH_HOST" >> "$BUILDKITE_SSH_KNOWN_HOST_PATH" || echo $?
+        ssh-keyscan "$BUILDKITE_REPO_SSH_HOST" >> "$BUILDKITE_SSH_KNOWN_HOST_PATH" ||
+          buildkite-warning "Couldn't ssh key scan repository host $BUILDKITE_REPO_SSH_HOST into $BUILDKITE_SSH_KNOWN_HOST_PATH"
       fi
     fi
   fi
